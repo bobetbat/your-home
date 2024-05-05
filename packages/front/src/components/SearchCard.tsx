@@ -1,37 +1,47 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Card, CardActions, CardContent, CardMedia, Typography } from '@mui/material';
-import logo from "./../logo.svg";
+import Image from 'next/image';
+import { Hash } from '../types';
 
 interface SearchCardProps {
   title: string;
   description: string;
+  landlord?: Hash;
   imageUrls: string[];
   handleDetail: () => void;
 }
 
-const SearchCard: React.FC<SearchCardProps> = ({ handleDetail,title, description, imageUrls }) => {
+const SearchCard: React.FC<SearchCardProps> = ({ handleDetail, title, description, imageUrls, landlord }) => {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
-  const handleImageClick = (index: number) => {
-    setSelectedImageIndex(index);
+  const handleImageClick = () => {
+    selectedImageIndex + 1 < imageUrls.length ? setSelectedImageIndex(selectedImageIndex + 1) : setSelectedImageIndex(0);
   };
 
   return (
     <Card>
       <CardMedia
-        component="img"
-        image={logo}
-        onClick={() => handleImageClick(selectedImageIndex + 1)}
-      />
+        onClick={() => handleImageClick()}
+        sx={{ position: 'relative', height: '20rem' }}
+      >
+        <Image
+          src={"/images/"+imageUrls[selectedImageIndex] ?? "/logo-dark.svg"}
+          fill
+          alt="logo"
+        />
+      </CardMedia>
       <CardContent>
         <Typography sx={{
           overflow: 'hidden',
           whiteSpace: 'nowrap'
-        }} textOverflow='ellipsis' variant="h5" component="h2">
+        }} textOverflow='ellipsis' variant="h6" component="h6">
           {title}
         </Typography>
-        <Typography variant="body2" component="p">
+        <Typography sx={{
+          overflow: 'hidden',
+          whiteSpace: 'nowrap'
+        }} textOverflow='ellipsis' variant="body2" component="p">
           {description}
         </Typography>
       </CardContent>

@@ -6,14 +6,19 @@ import { Stack } from '@mui/material';
 export const Footer: React.FC = () => {
 
   return (
-    <Stack sx={{ bottom: 1, bgcolor: 'primary.main', justifySelf: 'flex-end' }}>
-      <Box maxWidth="xl">
-        <Toolbar disableGutters>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+    <footer>
+      <Stack sx={{ bottom: 1, bgcolor: 'primary.main', justifySelf: 'flex-end' }}>
+        <Box maxWidth="xl">
+          <Toolbar disableGutters>
+            <Box sx={{
+              flexGrow: 1,
+              display: { xs: 'none', md: 'flex' }
+            }}>
 
-          </Box>
-        </Toolbar>
-      </Box>
-    </Stack>
+            </Box>
+          </Toolbar>
+        </Box>
+      </Stack>
+    </footer>
   );
 };
