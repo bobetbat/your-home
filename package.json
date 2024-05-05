@@ -3,7 +3,7 @@
   "license": "MIT",
   "scripts": {
     "bootstrap": "yarn lerna bootstrap",
-    "start:front": "cd packages/front && yarn start",
+    "start:front": "cd packages/front && yarn dev",
     "start:hardhat": "cd packages/contracts && yarn start",
     "contract:compile": "cd packages/contracts && yarn compile",
     "contract:test": "cd packages/contracts && yarn test",
@@ -11,7 +11,8 @@
     "changelog": "conventional-changelog -p angular -r 2 -i CHANGELOG.md -s",
     "commit": "git-cz -S",
     "prepare": "husky install",
-    "dev": "yarn start:hardhat && yarn contract:compile && yarn contract:deploy:local && yarn start:front"
+    "dev:prep": "yarn start:hardhat",
+    "dev:start": "yarn contract:compile && yarn contract:deploy:local && yarn start:front"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^17.1.0",

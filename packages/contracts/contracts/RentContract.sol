@@ -14,7 +14,7 @@ contract RentContract {
     }
     
     // Mapping of landlords and their rental properties
-    mapping(address => mapping(uint256 => Property)) public properties;
+    mapping(address => Property[]) public properties;
     // Mapping of tenants and the amount of collateral they have locked up
     mapping(address => uint256) public tenantCollateral;
     
@@ -23,40 +23,35 @@ contract RentContract {
      */
     function addProperty(uint256 _pricePerMonth, uint256 _collateral) public {
         require(_pricePerMonth > 0, "Price per month should be greater than 0");
-        require(properties[msg.sender][0].landlord == address(0), "You already have a property listed");
+        require(properties[msg.sender].length == 0, "You already have a property listed");
         
-        uint256 propertyIndex = getNumberOfProperties(msg.sender);
-        properties[msg.sender][propertyIndex] = Property(msg.sender, new address[](0), _pricePerMonth, _collateral, true, address(0), 0);
+        properties[msg.sender].push(Property(msg.sender, new address[](0), _pricePerMonth, _collateral, true, address(0), 0));
     }
     
     /**
      * Returns the number of rental properties for a given landlord
      */
     function getNumberOfProperties(address _landlord) public view returns (uint256) {
-        uint256 i = 0;
-        while (properties[_landlord][i].landlord != address(0)) {
-            i++;
-        }
-        return i;
+        return properties[_landlord].length;
     }
     
     /**
      * Removes a rental property for the landlord
      */
     function removeProperty(uint256 _index) public {
-        require(_index < getNumberOfProperties(msg.sender), "Index out of range");
+        require(_index < properties[msg.sender].length, "Index out of range");
         require(properties[msg.sender][_index].currentTenant == address(0), "Cannot remove a property with a current tenant");
         
-        uint256 lastPropertyIndex = getNumberOfProperties(msg.sender) - 1;
+        uint256 lastPropertyIndex = properties[msg.sender].length - 1;
         properties[msg.sender][_index] = properties[msg.sender][lastPropertyIndex];
-        delete properties[msg.sender][lastPropertyIndex];
+        properties[msg.sender].pop();
     }
     
     /**
      * Locks up collateral for a tenant to express interest in renting a property
      */
     function expressInterest(uint256 _propertyIndex) public payable {
-        require(_propertyIndex < getNumberOfProperties(properties[msg.sender]), "Property does not exist");
+        require(_propertyIndex < properties[msg.sender].length, "Property does not exist");
         Property storage property = properties[properties[msg.sender][_propertyIndex].landlord][_propertyIndex];
         require(property.isAvailable, "Property is not available for rent");
         require(msg.value >= property.collateral + 1 wei, "Collateral should be slightly larger than the required amount");
@@ -92,7 +87,6 @@ contract RentContract {
             }
         }
     }
-    
     /**
      * Allows tenant to pay rent for a property
      */

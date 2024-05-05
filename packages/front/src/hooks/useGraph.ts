@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 import { providers } from 'ethers';
 import { useProvider } from "wagmi";
-import Lock from '../../abi/Lock.json';
+// import Lock from '../../abi/Lock.json';
 
 const endpoint = 'https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2';
 const headers = {
@@ -24,7 +24,7 @@ export const getItems: Query = {
 export const useGraph = (graphqlQuery: Query) => {
   const [data, setData] = useState<ethers.Contract | null>(null);
   const [loading, setLoading] = useState(true);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line
   const [error, setError] = useState<any>(null);
   // const provider = useProvider();
 

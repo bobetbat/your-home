@@ -1,12 +1,12 @@
 import type { providers, ContractInterface } from 'ethers';
-import ethers, { Contract } from 'ethers';
+import ethers from 'ethers';
 import { useState, useEffect } from 'react';
 // import Lock from '../../abi/Lock.json';
 
 // Initialize logger
 
 export type UseContractHook = [
-  contract: Contract | undefined,
+  contract: ethers.Contract | undefined,
   loading: boolean,
   error: string | undefined,
 ];
@@ -15,10 +15,10 @@ export type UseContractHook = [
 export const useContract = (
   address: string,
   abi: ContractInterface,
-  provider?: providers.JsonRpcProvider,
+  provider?: providers.Provider,
   withSigner = true
 ): UseContractHook => {
-  const [contract, setContract] = useState<Contract | undefined>();
+  const [contract, setContract] = useState<ethers.Contract | undefined>();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | undefined>(undefined);
 
