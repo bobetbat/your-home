@@ -7,12 +7,10 @@ import { Layout } from '../components/Layout';
 
 import { useRouter } from 'next/router';
 import { useQuery } from '@apollo/client';
-// import { useContractRead, useNetwork, useToken } from 'wagmi';
 // import { usePropertyOffers } from '../hooks/usePropertyOffers';
 
-const Search: NextPage = () => {
+const Home: NextPage = () => {
   const router = useRouter();
-  // const { chain } = useNetwork();
 
   // Use the custom hook to manage property offers
   // const { offers, loading, error } = usePropertyOffers();
@@ -62,4 +60,4 @@ const Search: NextPage = () => {
   </Layout>
   );
 };
-export default Search
+export default Home

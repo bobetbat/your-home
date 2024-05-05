@@ -4,7 +4,7 @@ import React, { useEffect, useState,useCallback } from 'react';
 import { CID } from 'multiformats/cid'
 
 // Your contract ABI and address
-import EstateTokenABI from '../abi/EstateToken.json';
+import EstateTokenABI from '../../abi/EstateToken.json';
 import { Hash } from '../types';
 import { json } from '@helia/json';
 import { createHelia } from 'helia';
@@ -40,21 +40,21 @@ export const useReadEstate = (estateId: ethers.BigNumberish) => {
   console.log('getData START',tokenURI)
   setError(null);
   try {
-    const helia = await createHelia()
-    const j = json(helia)
-    const cidString = getCIDFromIPFSLink(tokenURI)
-  console.log('getData cidString',cidString)
+  //   const helia = await createHelia()
+  //   const j = json(helia)
+  //   const cidString = getCIDFromIPFSLink(tokenURI)
+  // console.log('getData cidString',cidString)
 
-    if (!cidString) {
-      throw Error('NO cid')
-    }
-    console.log('cid')
-    const cid = CID.parse(cidString)
-    console.log('cid 2')
-    const storedData = await j.get(cid)
-    console.log('storedData',storedData)
+  //   if (!cidString) {
+  //     throw Error('NO cid')
+  //   }
+  //   console.log('cid')
+  //   const cid = CID.parse(cidString)
+  //   console.log('cid 2')
+  //   const storedData = await j.get(cid)
+  //   console.log('storedData',storedData)
 
-    setData(storedData as Record<string,any>)
+  //   setData(storedData as Record<string,any>)
   } catch (err:any) {
     setError(err?.message ?? '');
     console.log('MINT ERROR',err)

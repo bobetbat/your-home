@@ -1,7 +1,8 @@
+import type { NextPage } from 'next';
 import { Box, Typography } from "@mui/material"
 import { Layout } from "../components/Layout"
 
-export const NotFound: React.FC = () => {
+const Page404: NextPage = () => {
   return (
     <Layout header>
       <Box mt='30vh'>
@@ -10,3 +11,5 @@ export const NotFound: React.FC = () => {
     </Layout>
   )
 }
+
+export default Page404;

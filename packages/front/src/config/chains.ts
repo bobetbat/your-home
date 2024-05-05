@@ -4,7 +4,7 @@ import type { Chain } from 'wagmi/chains'
 export const chiadoGnosisTestnet: Chain = {
   id: 10200,
   name: 'Chiado Testnet (XDAI)',
-  network: 'Gnosis',
+  // network: 'Gnosis',
   nativeCurrency: {
     name: 'XDAI',
     symbol: 'XDAI',
@@ -29,7 +29,7 @@ export const chiadoGnosisTestnet: Chain = {
 export const mantleTestnet: Chain = {
   id: 5001,
   name: 'Mantle Testnet',
-  network: 'Gnosis',
+  // network: 'Gnosis',
   nativeCurrency: {
     name: 'MNT',
     symbol: 'MNT',
@@ -54,7 +54,7 @@ export const mantleTestnet: Chain = {
 export const scrollAlfaTestnet: Chain = {
   id: 534353,
   name: 'Scroll Alfa Testnet',
-  network: '',
+  // network: '',
   nativeCurrency: {
     name: 'ETH',
     symbol: 'ETH',
@@ -79,7 +79,7 @@ export const scrollAlfaTestnet: Chain = {
 export const taikoTestnet: Chain = {
   id: 167005,
   name: 'Taiko',
-  network: '',
+  // network: '',
   nativeCurrency: {
     name: 'ETH',
     symbol: 'ETH',

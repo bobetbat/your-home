@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
-import { providers } from 'ethers';
-import { useProvider } from "wagmi";
+// import { providers } from 'ethers';
+// import { useProvider } from "wagmi";
 // import Lock from '../../abi/Lock.json';
 
 const endpoint = 'https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2';

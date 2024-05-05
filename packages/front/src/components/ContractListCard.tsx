@@ -1,12 +1,9 @@
 import React from 'react';
 import { Button, Card, CardContent, CardHeader, CardMedia, ListItemButton, ListItemText, Stack, TextField, Typography } from '@mui/material';
-import { Box } from '@mui/system';
-import { Layout } from '../components/Layout';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store';
 import { incrementByAmount } from '../store/reducers/counter';
-import logo from "./../logo.svg";
-import { useNavigate } from 'react-router';
+import { useRouter } from 'next/router';
 
 const contracts = [
   { address: '0x123', name: 'contract 1' },
@@ -15,9 +12,10 @@ const contracts = [
 export const ContractListCard: React.FC = () => {
   const counter = useSelector((state: RootState) => state.counter.value)
   const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const router = useRouter();
+
   const handleCreate = () => {
-    navigate('/create-contract')
+    router.push('/create-contract')
   }
 
   return (

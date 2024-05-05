@@ -10,7 +10,6 @@ import {
   ImageListItem,
   Stack,
 } from '@mui/material';
-import { ActionButton } from './ActionButton';
 import { useRouter } from 'next/router';
 // import logo from "./../logo.svg";
 
@@ -63,7 +62,7 @@ const AmenitiesWrapper = styled('div')({
   alignItems: 'flex-start',
 });
 
-const PropertyDetailPage: React.FC<Props> = ({ propertyDetail, config }) => {
+const PropertyDetailPage: React.FC<Props> = ({ propertyDetail }) => {
   const router = useRouter();
   const [imageIndex, setImageIndex] = useState(0);
   console.log(propertyDetail)

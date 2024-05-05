@@ -46,7 +46,7 @@ interface PropertyDetail {
 
 interface Props {
   propertyDetail: PropertyDetail;
-  handleCollateralLock: () => void;
+  // handleCollateralLock: () => void;
 }
 
 const Image = styled('img')({
@@ -60,7 +60,7 @@ const AmenitiesWrapper = styled('div')({
   alignItems: 'flex-start',
 });
 
-const PropertyDetailPage: React.FC<Props> = ({ propertyDetail, handleCollateralLock }) => {
+const PropertyDetailPage: React.FC<Props> = ({ propertyDetail }) => {
   const [imageIndex, setImageIndex] = useState(0);
 
   const handleNextImage = () => {
@@ -160,7 +160,7 @@ const PropertyDetailPage: React.FC<Props> = ({ propertyDetail, handleCollateralL
               {propertyDetail.price.amount} {propertyDetail.price.currency} per{' '}
               {propertyDetail.price.period}
             </Typography>
-            <Button onClick={() => { alert(`Collateral locked ${propertyDetail.price.amount}`); handleCollateralLock() }} variant='contained' color='primary'>Lock Collateral</Button>
+            <Button onClick={() => { alert(`Collateral locked ${propertyDetail.price.amount}`);  }} variant='contained' color='primary'>Lock Collateral</Button>
           </Grid>
         </Grid>
       </Paper>

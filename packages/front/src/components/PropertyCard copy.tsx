@@ -3,8 +3,6 @@ import { Button, Card, CardContent, CardHeader, CardMedia, Stack, TextField, Typ
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store';
 import { incrementByAmount } from '../store/reducers/counter';
-import { contracts, listProperty } from '../src/config/contract';
-import { ActionButton } from './ActionButton';
 
 export const PropertyCard: React.FC = () => {
   const counter = useSelector((state: RootState) => state.counter.value)

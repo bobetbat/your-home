@@ -1,4 +1,4 @@
-import type { providers, ContractInterface } from 'ethers';
+import type { Provider, InterfaceAbi } from 'ethers';
 import ethers from 'ethers';
 import { useState, useEffect } from 'react';
 // import Lock from '../../abi/Lock.json';
@@ -14,8 +14,8 @@ export type UseContractHook = [
 
 export const useContract = (
   address: string,
-  abi: ContractInterface,
-  provider?: providers.Provider,
+  abi: InterfaceAbi,
+  provider?: Provider,
   withSigner = true
 ): UseContractHook => {
   const [contract, setContract] = useState<ethers.Contract | undefined>();
