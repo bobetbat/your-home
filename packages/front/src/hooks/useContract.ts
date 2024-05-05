@@ -1,7 +1,6 @@
 import type { Provider, InterfaceAbi } from 'ethers';
 import ethers from 'ethers';
 import { useState, useEffect } from 'react';
-// import Lock from '../../abi/Lock.json';
 
 // Initialize logger
 

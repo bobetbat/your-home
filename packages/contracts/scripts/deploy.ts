@@ -5,17 +5,15 @@ async function main() {
   const ONE_YEAR_IN_SECS = 365 * 24 * 60 * 60;
   const unlockTime = currentTimestampInSeconds + ONE_YEAR_IN_SECS;
 
-  const lockedAmount = ethers.utils.parseEther("1");
-
-  const Lock = await ethers.getContractFactory("Lock");
-  const lock = await Lock.deploy(unlockTime, { value: lockedAmount });
-  await lock.deployed();
-  console.log(`Lock with 1 ETH and unlock timestamp ${unlockTime} deployed to ${lock.address}`);
+  const EstateContract = await ethers.getContractFactory("EstateContract");
+  const estateContract = await EstateContract.deploy();
+  await estateContract.deployed();
+  console.log(`EstateContract deployed. Address: ${estateContract.address}`);
   
   const RentContract = await ethers.getContractFactory("RentContract");
-  const rent = await RentContract.deploy();
-  await rent.deployed();
-
+  const rentContract = await RentContract.deploy();
+  await rentContract.deployed();
+  console.log(`EstateContract deployed. Address: ${rentContract.address}`);
 
 }
 
