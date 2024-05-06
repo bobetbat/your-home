@@ -4,7 +4,7 @@ import React, { useEffect, useState,useCallback } from 'react';
 import { CID } from 'multiformats/cid'
 
 // Your contract ABI and address
-import EstateTokenABI from '../../abi/EstateToken.json';
+// import EstateTokenABI from '../../abi/EstateToken.json';
 import { Hash } from '../types';
 import { json } from '@helia/json';
 import { createHelia } from 'helia';
@@ -30,7 +30,7 @@ export const useReadEstate = (estateId: ethers.BigNumberish) => {
   const [error, setError] = useState<string | null>(null);
   const { data:tokenURI, isError, isLoading } = useReadContract({
     address: process.env.NEXT_PUBLIC_ESTATE_TOKEN_ADDRESS as Hash,
-    abi: EstateTokenABI.abi,
+    // abi: EstateTokenABI.abi,
     functionName: 'tokenURI', // Replace with the actual function name
     args: [estateId],
   });

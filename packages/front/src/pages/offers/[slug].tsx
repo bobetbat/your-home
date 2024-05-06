@@ -30,9 +30,8 @@ const Contract: React.FC = () => {
 
   return (
     <Layout header footer>
-      <PropertyDetails propertyDetail={mockdata} 
-      />
-    </Layout >
+      <PropertyDetails propertyDetail={mockdata} />
+    </Layout>
   )
 }
 

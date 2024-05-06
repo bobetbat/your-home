@@ -27,7 +27,7 @@ export const Header: React.FC = () => {
             />
           </Button>
           <Stack direction='row' gap={2}>
-            <IconButton onClick={() => router.push('/contract')} color="inherit" aria-label="add to shopping cart">
+            <IconButton onClick={() => router.push('/dashboard')} color="inherit" aria-label="add to shopping cart">
               <Description />
             </IconButton>
             <ConnectButton />

@@ -3,12 +3,20 @@ import "@nomicfoundation/hardhat-toolbox";
 //TODO: Add more networks
 //TODO: Add network RPC URLs to the .env file
 //TODO: Add private key to the .env file
+import dotenv from 'dotenv';
+
+dotenv.config();
+
 
 const config: HardhatUserConfig = {
-  defaultNetwork: "hardhat",
+  defaultNetwork: "sepolia",
   networks: {
     localhost: {
       url: "http://127.0.0.1:8545"
+    },
+    sepolia: {
+      url: process.env.SEPOLIA_RPC_URL,
+      accounts: [process.env.PRIVATE_KEY_2 ?? ""]
     },
     hardhat: {
       // See its defaults

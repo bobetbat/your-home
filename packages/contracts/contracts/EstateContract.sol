@@ -8,35 +8,66 @@ contract EstateContract {
     }
 
     struct Estate {
-        uint256 area;            // Area in square meters
-        uint256 rooms;           // Number of rooms
-        BuildingData building;   // Nested struct for building details
-        string ipfs3DModelLink;  // IPFS link to a 3D model of the estate
+        uint256 area;
+        uint256 rooms;
+        BuildingData building;
+        string ipfs3DModelLink;
     }
 
+    uint256 public totalEstates;
     mapping(uint256 => Estate) public estates;
     mapping(uint256 => address) public estateOwners;
-    uint256 public totalEstates;
 
-    event EstateAdded(uint256 indexed estateId, uint256 area, uint256 rooms, uint yearBuilt, string material, string ipfs3DModelLink, address indexed owner);
-    event OwnershipTransferred(uint256 indexed estateId, address indexed previousOwner, address indexed newOwner);
+    event EstateAdded(
+        uint256 indexed estateId,
+        uint256 area,
+        uint256 rooms,
+        uint yearBuilt,
+        string material,
+        string ipfs3DModelLink,
+        address indexed owner
+    );
 
-    function addEstate(uint256 _area, uint256 _rooms, uint _yearBuilt, string memory _material, string memory _ipfs3DModelLink, address _owner) public {
+    event OwnershipTransferred(
+        uint256 indexed estateId,
+        address previousOwner,
+        address newOwner
+    );
+
+    modifier validEstate(uint256 _area, uint256 _rooms) {
+        require(_area > 0, "Area must be greater than zero.");
+        require(_rooms > 0, "Number of rooms must be greater than zero.");
+        _;
+    }
+
+    function addEstate(
+        uint256 _area,
+        uint256 _rooms,
+        uint _yearBuilt,
+        string memory _material,
+        string memory _ipfs3DModelLink,
+        address _owner
+    ) public validEstate(_area, _rooms) {
+        require(_owner != address(0), "Owner address cannot be zero.");
         uint256 estateId = totalEstates++;
-        estates[estateId] = Estate(_area, _rooms, BuildingData(_yearBuilt, _material), _ipfs3DModelLink);
+        estates[estateId] = Estate({
+            area: _area,
+            rooms: _rooms,
+            building: BuildingData({
+                yearBuilt: _yearBuilt,
+                material: _material
+            }),
+            ipfs3DModelLink: _ipfs3DModelLink
+        });
         estateOwners[estateId] = _owner;
         emit EstateAdded(estateId, _area, _rooms, _yearBuilt, _material, _ipfs3DModelLink, _owner);
     }
 
     function transferOwnership(uint256 _estateId, address _newOwner) public {
-        require(estateOwners[_estateId] == msg.sender, "Only current owner can transfer ownership");
+        require(msg.sender == estateOwners[_estateId], "Only the current owner can transfer ownership.");
+        require(_newOwner != address(0), "New owner address cannot be zero.");
         address previousOwner = estateOwners[_estateId];
         estateOwners[_estateId] = _newOwner;
         emit OwnershipTransferred(_estateId, previousOwner, _newOwner);
-    }
-
-    function getEstateDetails(uint256 _estateId) public view returns (uint256, uint256, uint, string memory, string memory) {
-        Estate storage estate = estates[_estateId];
-        return (estate.area, estate.rooms, estate.building.yearBuilt, estate.building.material, estate.ipfs3DModelLink);
     }
 }

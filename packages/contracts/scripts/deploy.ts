@@ -13,7 +13,7 @@ async function main() {
   const RentContract = await ethers.getContractFactory("RentContract");
   const rentContract = await RentContract.deploy();
   await rentContract.deployed();
-  console.log(`EstateContract deployed. Address: ${rentContract.address}`);
+  console.log(`RentContract deployed. Address: ${rentContract.address}`);
 
 }
 
