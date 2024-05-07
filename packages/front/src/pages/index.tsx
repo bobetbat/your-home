@@ -20,7 +20,7 @@ const Home: NextPage = () => {
 
   return (
     <Layout header footer>
-      <Grid container spacing={2}>
+      <Grid container spacing={2} pt={2}>
         <Grid item xs={12}>
           <Typography variant="h4" component="h1" align="center">
             Find Your Dream Apartment
