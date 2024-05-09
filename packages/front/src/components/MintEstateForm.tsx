@@ -1,27 +1,18 @@
 import React from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { TextField, Button, Box } from '@mui/material';
-import { useMintEstateToken } from '../hooks/useMintEstate';
 
 type FormValues = {
   area: string;
   rooms: string;
   yearBuilt: string;
   material: string;
-  ipfs3DModelLink: string;
   owner: string;
 };
 
-export const MintEstateForm: React.FC = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm<FormValues>();
-  const { mint, loading, error } = useMintEstateToken()
+export const MintEstateForm: React.FC<{ onSubmit: (data: FormValues) => void }> = ({ onSubmit }) => {
+  const { register, handleSubmit, formState: { errors, isLoading } } = useForm<FormValues>();
 
-  const onSubmit: SubmitHandler<FormValues> = (data) => {
-  console.log('MintEstateForm:data', data)
-    
-    mint(data); // Here you would call your mint function
-
-  };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Box display="flex" flexDirection="column" gap={2}>
@@ -53,15 +44,22 @@ export const MintEstateForm: React.FC = () => {
           error={Boolean(errors.material)}
           helperText={errors.material ? "Material is required" : ""}
         />
-        <TextField
-          label="IPFS Link to 3D Model"
-          variant="outlined"
-          {...register("ipfs3DModelLink", { required: true })}
-          error={Boolean(errors.ipfs3DModelLink)}
-          helperText={errors.ipfs3DModelLink ? "IPFS Link is required" : ""}
-        />
-        <Button type="submit" variant="contained">Mint Estate</Button>
+        <Button disabled={isLoading} type="submit" variant="contained">Mint Estate</Button>
       </Box>
     </form>
   );
 };
+
+
+
+// export default function Home() {
+
+//   return (
+//     <main className="w-full min-h-screen m-auto flex flex-col justify-center items-center">
+//       <input type="file" id="file" ref={inputFile} onChange={handleChange} />
+//       <button disabled={uploading} onClick={() => inputFile.current.click()}>
+//         {uploading ? "Uploading..." : "Upload"}
+//       </button>
+//     </main>
+//   );
+// }

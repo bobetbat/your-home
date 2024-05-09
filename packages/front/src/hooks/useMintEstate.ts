@@ -15,7 +15,7 @@ interface Apartment {
 
 
 type MintEstateTokenHook = {
-  mint: (data: Record<string, any>) => Promise<void>;
+  mint: (tokenURI: string) => Promise<void>;
   loading: boolean;
   error: string | null;
 };
@@ -26,9 +26,9 @@ export const useMintEstateToken = (): MintEstateTokenHook => {
   const { address, isConnecting, isDisconnected } = useAccount()
   const { writeContractAsync } = useWriteContract();
   console.log('address', address)
-  const mint = async ({ area, rooms, yearBuilt, material, ipfs3DModelLink }: Record<string, any>) => {
+  const mint = async (tokenURI: string) => {
     setLoading(true);
-    console.log('MINT START:', area, rooms, yearBuilt, material, ipfs3DModelLink)
+    console.log('MINT START:', tokenURI)
     setError(null);
     console.log('process.env.NEXT_PUBLIC_ESTATE_TOKEN_ADDRESS', process.env.NEXT_PUBLIC_ESTATE_TOKEN_ADDRESS)
     try {
@@ -37,7 +37,8 @@ export const useMintEstateToken = (): MintEstateTokenHook => {
         address: process.env.NEXT_PUBLIC_ESTATE_TOKEN_ADDRESS as Hash, // Replace with your contract address
         functionName: 'addEstate', // Assuming your contract has a mint function
         args: [
-          BigInt(area), BigInt(rooms), BigInt(yearBuilt), material, ipfs3DModelLink, address
+          address,
+          tokenURI
         ],
       });
       console.log("MINT RES", res)
