@@ -35,7 +35,7 @@ export const useMintEstateToken = (): MintEstateTokenHook => {
       const res = await writeContractAsync({
         abi: EstateContract.abi,
         address: process.env.NEXT_PUBLIC_ESTATE_TOKEN_ADDRESS as Hash, // Replace with your contract address
-        functionName: 'addEstate', // Assuming your contract has a mint function
+        functionName: 'mint',
         args: [
           address,
           tokenURI
