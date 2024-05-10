@@ -5,15 +5,15 @@ async function main() {
   const ONE_YEAR_IN_SECS = 365 * 24 * 60 * 60;
   const unlockTime = currentTimestampInSeconds + ONE_YEAR_IN_SECS;
 
-  const EstateContract = await ethers.getContractFactory("EstateContract");
-  const estateContract = await EstateContract.deploy();
+  const EstateToken = await ethers.getContractFactory("EstateToken");
+  const estateContract = await EstateToken.deploy();
   await estateContract.deployed();
-  console.log(`EstateContract deployed. Address: ${estateContract.address}`);
+  console.log(`EstateToken deployed. Address: ${estateContract.address}`);
   
-  const RentContract = await ethers.getContractFactory("RentContract");
-  const rentContract = await RentContract.deploy();
-  await rentContract.deployed();
-  console.log(`RentContract deployed. Address: ${rentContract.address}`);
+  // const RentContract = await ethers.getContractFactory("RentContract");
+  // const rentContract = await RentContract.deploy();
+  // await rentContract.deployed();
+  // console.log(`RentContract deployed. Address: ${rentContract.address}`);
 
 }
 
