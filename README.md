@@ -1,25 +1,28 @@
-# accommodation-management-system
-
-# Development
+# install dependencies
 ```
-// install dependencies
 yarn
 yarn bootstrap
 ```
+# run compile contracts
+```
+yarn contracts:compile
+```
+# run local EVM node
+```
+yarn start:hardhat
+```
+# deploy contracts
+```
+// local EVM node
+yarn contract:deploy:local
 
+// sepolia testnet
+yarn contract:deploy:sepolia
+```
+# run frontend
 ```
 // run frontend
 yarn start:front
-```
-
-```
-// compile contracts
-yarn contracts:compile
-```
-
-```
-// test contracts
-yarn contracts:test
 ```
 
 # Contribution
