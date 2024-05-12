@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useAccount, useWriteContract } from 'wagmi';
 import EstateToken from '../../../contracts/artifacts/contracts/EstateToken.sol/EstateToken.json'; // Adjust the path according to your project structure
-import { Hash } from '../types';
 import { Estate } from '../components/MintEstateForm';
+import { contracts } from '../config/contract';
 
 
 type MintEstateTokenHook = {
@@ -14,16 +14,18 @@ type MintEstateTokenHook = {
 export const useMintEstateToken = (): MintEstateTokenHook => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const { address, isConnecting, isDisconnected } = useAccount()
+  const { address, isConnecting, isDisconnected, chainId } = useAccount()
   const { writeContractAsync } = useWriteContract();
-  console.log('address', address)
 
   const mint = async (estateMetadata: Estate) => {
     setLoading(true);
     console.log('MINT START:', estateMetadata)
     setError(null);
-    console.log('NEXT_PUBLIC_ESTATE_TOKEN_ADDRESS', process.env.NEXT_PUBLIC_ESTATE_TOKEN_ADDRESS)
     try {
+      if (!chainId) {
+        throw Error('chainId is undefined')
+      }
+      console.log('NEXT_PUBLIC_ESTATE_TOKEN_ADDRESS', contracts[chainId].estate)
 
       const data = new FormData();
       console.log('data', data)
@@ -53,7 +55,7 @@ export const useMintEstateToken = (): MintEstateTokenHook => {
 
       const res = await writeContractAsync({
         abi: EstateToken.abi,
-        address: process.env.NEXT_PUBLIC_ESTATE_TOKEN_ADDRESS as Hash, // Replace with your contract address
+        address: contracts[chainId].estate, // Replace with your contract address
         functionName: 'mint',
         args: [
           address,
