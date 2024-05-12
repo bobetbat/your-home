@@ -1,0 +1,50 @@
+specVersion: 1.0.0
+indexerHints:
+  prune: auto
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Estate
+    network: sepolia
+    source:
+      address: "0xA891a06e78B942a3D9f27098672a7FE6074b93aC"
+      abi: Estate
+      startBlock: 0
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Approval
+        - ApprovalForAll
+        - BatchMetadataUpdate
+        - EstateMinted
+        - MetadataUpdate
+        - OwnershipTransferred
+        - Transfer
+        - WhitelistAdded
+        - WhitelistRemoved
+      abis:
+        - name: Estate
+          file: ./abis/Estate.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,indexed uint256)
+          handler: handleApproval
+        - event: ApprovalForAll(indexed address,indexed address,bool)
+          handler: handleApprovalForAll
+        - event: BatchMetadataUpdate(uint256,uint256)
+          handler: handleBatchMetadataUpdate
+        - event: EstateMinted(indexed uint256,address)
+          handler: handleEstateMinted
+        - event: MetadataUpdate(uint256)
+          handler: handleMetadataUpdate
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+        - event: WhitelistAdded(indexed address)
+          handler: handleWhitelistAdded
+        - event: WhitelistRemoved(indexed address)
+          handler: handleWhitelistRemoved
+      file: ./src/estate.ts

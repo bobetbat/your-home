@@ -1,0 +1,8 @@
+{
+  "sepolia": {
+    "Estate": {
+      "address": "0xA891a06e78B942a3D9f27098672a7FE6074b93aC",
+      "startBlock": 0
+    }
+  }
+}
