@@ -12,7 +12,7 @@ contract EstateToken is ERC721URIStorage, Ownable {
 
     event WhitelistAdded(address indexed user);
     event WhitelistRemoved(address indexed user);
-    event EstateMinted(uint256 indexed tokenId,address to);
+    event EstateMint(uint256 indexed tokenId,address to, string tokenURI);
 
     mapping(address => bool) public whitelistedUsers;
 
@@ -24,7 +24,7 @@ contract EstateToken is ERC721URIStorage, Ownable {
 
         _mint(to, tokenId);
         _setTokenURI(tokenId, tokenURI);
-        emit EstateMinted(tokenId, to);
+        emit EstateMint(tokenId, to, tokenURI);
     }
 
     function addToWhitelist(address user) public onlyOwner {

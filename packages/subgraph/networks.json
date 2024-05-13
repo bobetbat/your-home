@@ -1,8 +1,8 @@
 {
   "sepolia": {
-    "Estate": {
-      "address": "0xA891a06e78B942a3D9f27098672a7FE6074b93aC",
-      "startBlock": 0
+    "zk-estate": {
+      "address": "0xbA7a18ecF10f054052BF3E9C81dA0e39925491c9",
+      "startBlock": 5896614
     }
   }
 }

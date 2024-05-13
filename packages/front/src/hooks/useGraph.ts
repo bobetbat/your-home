@@ -4,7 +4,7 @@ import { ethers } from 'ethers';
 // import { useProvider } from "wagmi";
 // import Lock from '../../abi/Lock.json';
 
-const endpoint = 'https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2';
+const endpoint = 'https://api.studio.thegraph.com/query/22641/zk-estate/0.0.2';
 const headers = {
   "content-type": "application/json",
   // "Authorization": "<token>"

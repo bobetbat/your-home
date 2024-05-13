@@ -2,18 +2,18 @@ import {
   Approval as ApprovalEvent,
   ApprovalForAll as ApprovalForAllEvent,
   BatchMetadataUpdate as BatchMetadataUpdateEvent,
-  EstateMinted as EstateMintedEvent,
+  EstateMint as EstateMintEvent,
   MetadataUpdate as MetadataUpdateEvent,
   OwnershipTransferred as OwnershipTransferredEvent,
   Transfer as TransferEvent,
   WhitelistAdded as WhitelistAddedEvent,
   WhitelistRemoved as WhitelistRemovedEvent
-} from "../generated/Estate/Estate"
+} from "../generated/zk-estate/zk-estate"
 import {
   Approval,
   ApprovalForAll,
   BatchMetadataUpdate,
-  EstateMinted,
+  EstateMint,
   MetadataUpdate,
   OwnershipTransferred,
   Transfer,
@@ -67,12 +67,13 @@ export function handleBatchMetadataUpdate(
   entity.save()
 }
 
-export function handleEstateMinted(event: EstateMintedEvent): void {
-  let entity = new EstateMinted(
+export function handleEstateMint(event: EstateMintEvent): void {
+  let entity = new EstateMint(
     event.transaction.hash.concatI32(event.logIndex.toI32())
   )
   entity.tokenId = event.params.tokenId
   entity.to = event.params.to
+  entity.tokenURI = event.params.tokenURI
 
   entity.blockNumber = event.block.number
   entity.blockTimestamp = event.block.timestamp

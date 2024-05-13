@@ -19,7 +19,7 @@ export interface TContracts {
 export const contracts: TContracts = {
   [sepolia.id]: {
     // name: 'sepolia',
-    estate: '0xA891a06e78B942a3D9f27098672a7FE6074b93aC',
+    estate: '0xbA7a18ecF10f054052BF3E9C81dA0e39925491c9',
     // rent: ''
   },
 }

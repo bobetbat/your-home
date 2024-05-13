@@ -4,13 +4,13 @@ import {
   Approval,
   ApprovalForAll,
   BatchMetadataUpdate,
-  EstateMinted,
+  EstateMint,
   MetadataUpdate,
   OwnershipTransferred,
   Transfer,
   WhitelistAdded,
   WhitelistRemoved
-} from "../generated/Estate/Estate"
+} from "../generated/zk-estate/zk-estate"
 
 export function createApprovalEvent(
   owner: Address,
@@ -83,25 +83,29 @@ export function createBatchMetadataUpdateEvent(
   return batchMetadataUpdateEvent
 }
 
-export function createEstateMintedEvent(
+export function createEstateMintEvent(
   tokenId: BigInt,
-  to: Address
-): EstateMinted {
-  let estateMintedEvent = changetype<EstateMinted>(newMockEvent())
+  to: Address,
+  tokenURI: string
+): EstateMint {
+  let estateMintEvent = changetype<EstateMint>(newMockEvent())
 
-  estateMintedEvent.parameters = new Array()
+  estateMintEvent.parameters = new Array()
 
-  estateMintedEvent.parameters.push(
+  estateMintEvent.parameters.push(
     new ethereum.EventParam(
       "tokenId",
       ethereum.Value.fromUnsignedBigInt(tokenId)
     )
   )
-  estateMintedEvent.parameters.push(
+  estateMintEvent.parameters.push(
     new ethereum.EventParam("to", ethereum.Value.fromAddress(to))
   )
+  estateMintEvent.parameters.push(
+    new ethereum.EventParam("tokenURI", ethereum.Value.fromString(tokenURI))
+  )
 
-  return estateMintedEvent
+  return estateMintEvent
 }
 
 export function createMetadataUpdateEvent(_tokenId: BigInt): MetadataUpdate {

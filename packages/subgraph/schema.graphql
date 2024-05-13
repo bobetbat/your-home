@@ -27,10 +27,11 @@ type BatchMetadataUpdate @entity(immutable: true) {
   transactionHash: Bytes!
 }
 
-type EstateMinted @entity(immutable: true) {
+type EstateMint @entity(immutable: true) {
   id: Bytes!
   tokenId: BigInt! # uint256
   to: Bytes! # address
+  tokenURI: String! # string
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!

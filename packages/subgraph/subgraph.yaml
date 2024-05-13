@@ -5,12 +5,12 @@ schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum
-    name: Estate
+    name: zk-estate
     network: sepolia
     source:
-      address: "0xA891a06e78B942a3D9f27098672a7FE6074b93aC"
-      abi: Estate
-      startBlock: 0
+      address: "0xbA7a18ecF10f054052BF3E9C81dA0e39925491c9"
+      abi: zk-estate
+      startBlock: 5896614
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -19,15 +19,15 @@ dataSources:
         - Approval
         - ApprovalForAll
         - BatchMetadataUpdate
-        - EstateMinted
+        - EstateMint
         - MetadataUpdate
         - OwnershipTransferred
         - Transfer
         - WhitelistAdded
         - WhitelistRemoved
       abis:
-        - name: Estate
-          file: ./abis/Estate.json
+        - name: zk-estate
+          file: ./abis/zk-estate.json
       eventHandlers:
         - event: Approval(indexed address,indexed address,indexed uint256)
           handler: handleApproval
@@ -35,8 +35,8 @@ dataSources:
           handler: handleApprovalForAll
         - event: BatchMetadataUpdate(uint256,uint256)
           handler: handleBatchMetadataUpdate
-        - event: EstateMinted(indexed uint256,address)
-          handler: handleEstateMinted
+        - event: EstateMint(indexed uint256,address,string)
+          handler: handleEstateMint
         - event: MetadataUpdate(uint256)
           handler: handleMetadataUpdate
         - event: OwnershipTransferred(indexed address,indexed address)
@@ -47,4 +47,4 @@ dataSources:
           handler: handleWhitelistAdded
         - event: WhitelistRemoved(indexed address)
           handler: handleWhitelistRemoved
-      file: ./src/estate.ts
+      file: ./src/zk-estate.ts

@@ -83,9 +83,15 @@
         "internalType": "address",
         "name": "to",
         "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "tokenURI",
+        "type": "string"
       }
     ],
-    "name": "EstateMinted",
+    "name": "EstateMint",
     "type": "event"
   },
   {
