@@ -5,11 +5,11 @@ schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum
-    name: Contract
+    name: Estate
     network: sepolia
     source:
       address: "0xbA7a18ecF10f054052BF3E9C81dA0e39925491c9"
-      abi: Contract
+      abi: Estate
       startBlock: 0
     mapping:
       kind: ethereum/events
@@ -26,8 +26,8 @@ dataSources:
         - WhitelistAdded
         - WhitelistRemoved
       abis:
-        - name: Contract
-          file: ./abis/Contract.json
+        - name: Estate
+          file: ./abis/Estate.json
       eventHandlers:
         - event: Approval(indexed address,indexed address,indexed uint256)
           handler: handleApproval
@@ -47,4 +47,4 @@ dataSources:
           handler: handleWhitelistAdded
         - event: WhitelistRemoved(indexed address)
           handler: handleWhitelistRemoved
-      file: ./src/contract.ts
+      file: ./src/estate.ts

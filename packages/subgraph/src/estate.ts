@@ -8,7 +8,7 @@ import {
   Transfer as TransferEvent,
   WhitelistAdded as WhitelistAddedEvent,
   WhitelistRemoved as WhitelistRemovedEvent
-} from "../generated/Contract/Contract"
+} from "../generated/Estate/Estate"
 import {
   Approval,
   ApprovalForAll,
