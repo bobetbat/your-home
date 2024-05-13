@@ -8,7 +8,7 @@ import {
   Transfer as TransferEvent,
   WhitelistAdded as WhitelistAddedEvent,
   WhitelistRemoved as WhitelistRemovedEvent
-} from "../generated/zk-estate/zk-estate"
+} from "../generated/Contract/Contract"
 import {
   Approval,
   ApprovalForAll,

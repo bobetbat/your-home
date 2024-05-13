@@ -10,7 +10,7 @@ import {
   Transfer,
   WhitelistAdded,
   WhitelistRemoved
-} from "../generated/zk-estate/zk-estate"
+} from "../generated/Contract/Contract"
 
 export function createApprovalEvent(
   owner: Address,

@@ -5,12 +5,12 @@ schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum
-    name: zk-estate
+    name: Contract
     network: sepolia
     source:
       address: "0xbA7a18ecF10f054052BF3E9C81dA0e39925491c9"
-      abi: zk-estate
-      startBlock: 5896614
+      abi: Contract
+      startBlock: 0
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -26,8 +26,8 @@ dataSources:
         - WhitelistAdded
         - WhitelistRemoved
       abis:
-        - name: zk-estate
-          file: ./abis/zk-estate.json
+        - name: Contract
+          file: ./abis/Contract.json
       eventHandlers:
         - event: Approval(indexed address,indexed address,indexed uint256)
           handler: handleApproval
@@ -47,4 +47,4 @@ dataSources:
           handler: handleWhitelistAdded
         - event: WhitelistRemoved(indexed address)
           handler: handleWhitelistRemoved
-      file: ./src/zk-estate.ts
+      file: ./src/contract.ts
