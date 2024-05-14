@@ -4,7 +4,7 @@ import { ethers } from 'ethers';
 // import { useProvider } from "wagmi";
 // import Lock from '../../abi/Lock.json';
 
-const endpoint = 'https://api.studio.thegraph.com/query/22641/zk-estate/0.0.2';
+const endpoint = 'https://api.studio.thegraph.com/query/22641/zk-estate/0.0.3';
 const headers = {
   "content-type": "application/json",
   // "Authorization": "<token>"
@@ -14,19 +14,23 @@ interface Query {
 }
 export const getItems: Query = {
   "query": `{
-    pairs {
-      id
+    estateMints {
+      to
+      tokenId
+      tokenURI
     }
   }`,
 };
-
+export interface EstateTokenData {
+  tokenURI: string;
+  to: string;
+  tokenId: string;
+}
 
 export const useGraph = (graphqlQuery: Query) => {
-  const [data, setData] = useState<ethers.Contract | null>(null);
+  const [data, setData] = useState<EstateTokenData[]>([]);
   const [loading, setLoading] = useState(true);
-  // eslint-disable-next-line
   const [error, setError] = useState<any>(null);
-  // const provider = useProvider();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,9 +42,8 @@ export const useGraph = (graphqlQuery: Query) => {
         };
         const response = await fetch(endpoint, options);
         const data = await response.json();
-        console.log('providers.getDefaultProvider()',)
 
-        setData(data);
+        setData(data.data.estateMints);
         console.log("fetch data:", data);
       } catch (error) {
         console.log("error Contract:", error);
