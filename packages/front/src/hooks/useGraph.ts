@@ -1,8 +1,4 @@
 import { useState, useEffect } from 'react';
-import { ethers } from 'ethers';
-// import { providers } from 'ethers';
-// import { useProvider } from "wagmi";
-// import Lock from '../../abi/Lock.json';
 
 const endpoint = 'https://api.studio.thegraph.com/query/22641/zk-estate/0.0.3';
 const headers = {

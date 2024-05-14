@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { Box, Button, Checkbox, FormControlLabel, TextField } from '@mui/material';
 import { SelectInput, SelectInputProps } from './inputs/Select';
 import { TextInput } from './inputs/Text';
+import { useMintEstateToken } from '../hooks/useMintEstate';
 
 // Enums for dropdown options
 enum PropertyType {
@@ -59,8 +60,9 @@ const constructionOptions: SelectInputProps<Estate>['options'] = [
   { label: 'Steel Frame', value: ConstructionType.SteelFrame }
 ];
 
-export const MintEstateForm: React.FC<{ onSubmit: (data: Estate) => void }> = ({ onSubmit }) => {
-  const { control, register, handleSubmit, formState: { isSubmitting } } = useForm<Estate>({
+export const MintEstateForm: React.FC<{ onSubmit: () => void }> = ({ onSubmit }) => {
+  const { mint, loading, error } = useMintEstateToken()
+  const { control, register, handleSubmit: submit, formState: { isSubmitting } } = useForm<Estate>({
     defaultValues: {
       utilities: [],
       amenities: []
@@ -76,8 +78,20 @@ export const MintEstateForm: React.FC<{ onSubmit: (data: Estate) => void }> = ({
   //   name: "amenities"
   // });
 
+  const handleSubmit = useCallback(
+    async (data: Estate) => {
+      try {
+        await mint(data)
+        onSubmit()
+      } catch (e) {
+
+      }
+    },
+    [mint],
+  )
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={submit(handleSubmit)}>
       <Box display="flex" flexDirection="column" gap={2}>
         <TextInput name="coordinates" label="Coordinates" control={control} required />
         <TextInput name="propertyAddress" label="Property Address" control={control} required />

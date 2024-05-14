@@ -1,5 +1,6 @@
 import React from 'react';
-import { CircularProgress, Paper, Stack, Table, TableBody, TableCell, TableHead, TableRow, Typography, Button } from '@mui/material';
+import { CircularProgress, Paper, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material';
+import { useRouter } from 'next/router';
 
 interface Estate {
   tokenId: string;
@@ -12,35 +13,35 @@ interface Props {
   data: Estate[] | null;
 }
 
-export const PropertyList: React.FC<Props> = ({ loading, error, data }) => (
-  <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', gap: 2 }}>
-    {loading && <CircularProgress />}
-    {error && <Typography>No properties owned</Typography>}
-    {!loading && !error && data && (
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>Token ID</TableCell>
-            <TableCell>Token URI</TableCell>
-            <TableCell>Actions</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {data.map((estate, index) => (
-            <TableRow key={index}>
-              <TableCell>{estate.tokenId}</TableCell>
-              <TableCell>{estate.tokenURI}</TableCell>
-              <TableCell>
-                <Stack direction="row" spacing={1}>
-                  <Button variant="contained" color="primary">Edit</Button>
-                  <Button variant="outlined" color="secondary">Delete</Button>
-                </Stack>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    )}
-  </Paper>
-);
+export const PropertyList: React.FC<Props> = ({ loading, error, data }) => {
+  const router = useRouter();
 
+  const handleRowClick = (tokenId: string) => {
+    router.push(`/properties/${tokenId}`); // Navigate to property detail page
+  };
+
+  return (
+    <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', gap: 2 }}>
+      {loading && <CircularProgress />}
+      {error && <Typography>No properties owned</Typography>}
+      {!loading && !error && data && (
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell sx={{ whiteSpace: 'nowrap' }}>Token ID</TableCell>
+              <TableCell sx={{ whiteSpace: 'nowrap' }}>Token URI</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {data.map((estate, index) => (
+              <TableRow key={index} sx={{ cursor: 'pointer' }} onClick={() => handleRowClick(estate.tokenId)}>
+                <TableCell>{estate.tokenId}</TableCell>
+                <TableCell>{estate.tokenURI}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      )}
+    </Paper>
+  );
+};

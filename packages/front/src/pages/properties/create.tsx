@@ -1,14 +1,16 @@
-import React, { useRef, useState } from 'react';
+import React from 'react';
 import { Layout } from '../../components/Layout';
 import { Paper, Typography } from '@mui/material';
 import { MintEstateForm } from '../../components/MintEstateForm';
-import { useMintEstateToken } from '../../hooks/useMintEstate';
+import { useRouter } from 'next/router';
 
 
 const CreateProperty: React.FC = () => {
-  const { mint, loading, error } = useMintEstateToken()
+  const router = useRouter();
 
-
+  const handleSubmit = () => {
+    router.push('/dashboard')
+  }
 
   return (
     <Layout header footer>
@@ -16,7 +18,7 @@ const CreateProperty: React.FC = () => {
         Add property
       </Typography>
       <Paper sx={{ p: 2 }}>
-        <MintEstateForm onSubmit={mint} />
+        <MintEstateForm onSubmit={handleSubmit} />
       </Paper>
     </Layout>
   )
