@@ -20,6 +20,6 @@ export const contracts: TContracts = {
   [sepolia.id]: {
     // name: 'sepolia',
     estate: '0xbA7a18ecF10f054052BF3E9C81dA0e39925491c9',
-    // rent: ''
+    rent: '0xeEe5Bf74B6BE8CfdDf9EF89c518c72b46091d398'
   },
 }

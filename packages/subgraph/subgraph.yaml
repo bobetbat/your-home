@@ -10,7 +10,7 @@ dataSources:
     source:
       address: "0xbA7a18ecF10f054052BF3E9C81dA0e39925491c9"
       abi: Estate
-      startBlock: 0
+      startBlock: 5896614
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
