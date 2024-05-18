@@ -1,0 +1,8 @@
+{
+  "sepolia": {
+    "RentalToken": {
+      "address": "0xeEe5Bf74B6BE8CfdDf9EF89c518c72b46091d398",
+      "startBlock": 5927180
+    }
+  }
+}
