@@ -1,6 +1,7 @@
 import React from 'react';
-import { CircularProgress, Paper, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material';
+import { CircularProgress, Paper, Typography, Box } from '@mui/material';
 import { useRouter } from 'next/router';
+import HomeIcon from '@mui/icons-material/Home'; // Example icon for property data
 
 interface Estate {
   tokenId: string;
@@ -16,32 +17,36 @@ interface Props {
 export const PropertyList: React.FC<Props> = ({ loading, error, data }) => {
   const router = useRouter();
 
-  const handleRowClick = (tokenId: string) => {
+  const handleCardClick = (tokenId: string) => {
     router.push(`/properties/${tokenId}`); // Navigate to property detail page
   };
 
   return (
-    <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', gap: 2 }}>
+    <Box sx={{ p: 2, display: 'flex', flexDirection: 'column', gap: 2 }}>
       {loading && <CircularProgress />}
       {error && <Typography>No properties owned</Typography>}
-      {!loading && !error && data && (
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell sx={{ whiteSpace: 'nowrap' }}>Token ID</TableCell>
-              <TableCell sx={{ whiteSpace: 'nowrap' }}>Token URI</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data.map((estate, index) => (
-              <TableRow key={index} sx={{ cursor: 'pointer' }} onClick={() => handleRowClick(estate.tokenId)}>
-                <TableCell>{estate.tokenId}</TableCell>
-                <TableCell>{estate.tokenURI}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      )}
-    </Paper>
+      {!loading && !error && data && data.map((estate, index) => (
+        <Paper 
+          key={index}
+          sx={{
+            p: 2,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 1,
+            borderRadius: '16px',
+            cursor: 'pointer',
+            border: '1px solid #ccc',
+            width: '100%',
+          }}
+          onClick={() => handleCardClick(estate.tokenId)}
+        >
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <HomeIcon />
+            <Typography variant="h6">Token ID: {estate.tokenId}</Typography>
+          </Box>
+          <Typography variant="body2">Token URI: {estate.tokenURI}</Typography>
+        </Paper>
+      ))}
+    </Box>
   );
 };
