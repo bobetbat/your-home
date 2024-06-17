@@ -1,13 +1,13 @@
 import React from 'react';
-import { Layout } from '../components/Layout';
+import { Layout } from '../../components/Layout';
 import { Button, Paper, Stack, Typography } from '@mui/material';
 import { useRouter } from 'next/router';
 import { CircularProgress } from '@mui/material';
-import { PropertyList } from '../components/PropertyList';
-import { useGraphMetaData, getItems } from '../hooks/useGraphMetaData';
+import { PropertyList } from '../../components/PropertyList';
+import { useGraphMetaData, getItems } from '../../hooks/useGraphMetaData';
 
 
-const Dashboard: React.FC = () => {
+const Properties: React.FC = () => {
   const router = useRouter();
   const { data, loading, error } = useGraphMetaData(getItems)
 
@@ -18,17 +18,8 @@ const Dashboard: React.FC = () => {
         <Button onClick={() => router.push('/properties/create')}>Add Property</Button>
       </Stack>
       <PropertyList loading={loading} error={error} data={data} />
-
-      <Typography variant='h3'>Offers</Typography>
-      <Paper sx={{ p: 2, display: 'flex' }}>
-        {loading ? <CircularProgress /> : null}
-        {error ? error : null}
-      </Paper>
-      <Paper>
-
-      </Paper>
     </Layout>
   )
 }
 
-export default Dashboard
+export default Properties

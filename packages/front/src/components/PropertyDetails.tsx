@@ -9,7 +9,6 @@ import {
   ImageList,
   ImageListItem,
 } from '@mui/material';
-import logo from "./../logo.svg";
 
 interface PropertyDetail {
   id: string;
@@ -84,9 +83,11 @@ const PropertyDetailPage: React.FC<Props> = ({ propertyDetail }) => {
               {propertyDetail.images.map((image, index) => (
                 <ImageListItem key={index}>
                   <Image
-                    src={logo}
+                    src="/logo.svg"
+
                     alt={propertyDetail.title}
                     style={{
+                      background: '#000',
                       display: index === imageIndex ? 'block' : 'none',
                     }}
                   />
@@ -160,7 +161,7 @@ const PropertyDetailPage: React.FC<Props> = ({ propertyDetail }) => {
               {propertyDetail.price.amount} {propertyDetail.price.currency} per{' '}
               {propertyDetail.price.period}
             </Typography>
-            <Button onClick={() => { alert(`Collateral locked ${propertyDetail.price.amount}`);  }} variant='contained' color='primary'>Lock Collateral</Button>
+            <Button onClick={() => { alert(`Collateral locked ${propertyDetail.price.amount}`); }} variant='contained' color='primary'>Lock Collateral</Button>
           </Grid>
         </Grid>
       </Paper>

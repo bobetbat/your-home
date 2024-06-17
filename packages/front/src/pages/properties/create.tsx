@@ -9,7 +9,7 @@ const CreateProperty: React.FC = () => {
   const router = useRouter();
 
   const handleSubmit = () => {
-    router.push('/dashboard')
+    router.push('/properties')
   }
 
   return (
