@@ -172,10 +172,8 @@ const Contract: React.FC = () => {
               </Grid>
               <Grid item xs={12} sm={3}>
                 <Typography variant="body1">Starting: {offer.starting}</Typography>
-                {/* <Typography variant="body1">Ending: {offer.ending}</Typography> */}
               </Grid>
               <Grid item xs={12} sm={3}>
-                {/* <Typography variant="body1">Starting: {offer.starting}</Typography> */}
                 <Typography variant="body1">Ending: {offer.ending}</Typography>
               </Grid>
               <Grid item xs={12} sm={2}>
@@ -190,9 +188,9 @@ const Contract: React.FC = () => {
                       <CloseIcon />
                     </IconButton>
                   </Tooltip>
-                  <Tooltip title="Accept">
-                    <IconButton aria-label="accept" color="primary" onClick={handleApprove}>
-                      <CheckIcon />
+                  <Tooltip title="More>">
+                    <IconButton aria-label="more" color="primary" onClick={handleApprove}>
+                      <ListIcon />
                     </IconButton>
                   </Tooltip>
                 </Box>

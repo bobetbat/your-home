@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 
-const endpoint = 'https://api.studio.thegraph.com/query/22641/zk-estate/0.0.3';
+const endpoint = 'https://api.studio.thegraph.com/query/22641/estate/0.0.2';
+
 const headers = {
   "content-type": "application/json",
   // "Authorization": "<token>"
@@ -8,6 +9,7 @@ const headers = {
 interface Query {
   query: string;
 }
+
 export const getItems: Query = {
   "query": `{
     estateMints {
