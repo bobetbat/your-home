@@ -13,9 +13,6 @@ import {
   IconButton,
   Stack,
 } from '@mui/material';
-import PoolIcon from '@mui/icons-material/Pool';
-import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
-import ConciergeIcon from '@mui/icons-material/Person';
 import ElectricityIcon from '@mui/icons-material/Bolt';
 import WaterIcon from '@mui/icons-material/Opacity';
 import EditIcon from '@mui/icons-material/Edit';
@@ -23,29 +20,8 @@ import ListIcon from '@mui/icons-material/List';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
-
-const mockdata = {
-  id: "1234",
-  title: "123 Main St, City, State Zip",
-  images: ['/logo-dark.svg'],
-  area: { size: 1000, unit: "sqft" },
-  building: {
-    name: "The Tower",
-    address: "123 Main St, City, State Zip",
-    yearBuilt: 2015,
-    floors: 20,
-    amenities: [
-      { icon: <PoolIcon />, text: "Swimming Pool" },
-      { icon: <FitnessCenterIcon />, text: "Fitness Center" },
-      { icon: <ConciergeIcon />, text: "24-Hour Concierge" },
-    ],
-  },
-  consumption: {
-    electricity: { usage: 200, unit: "kWh" },
-    water: { usage: 500, unit: "gal" }
-  },
-  price: { amount: 2500, currency: "USD", period: "month" }
-};
+import { mockdata } from '../../components/MintEstateForm';
+import { mapAmenitiesToIcons } from '../../components/Amenities';
 
 const offers = [
   { id: 1, address: '0x2093jr2094j0924j2049k193e3290', starting: '2024-07-01', ending: '2025-06-30' },
@@ -71,19 +47,18 @@ const Contract: React.FC = () => {
     alert('Declined tenant');
   };
 
+  const amenities = mapAmenitiesToIcons(mockdata.building.amenities);
+
   return (
     <Layout header footer>
       <Paper sx={{ p: 2, mb: 4, borderRadius: 2, border: '1px solid #ccc', width: '100%', height: 'auto' }}>
         <Grid container spacing={2} alignItems="flex-start">
           <Grid item xs={12} sm={3}>
-            <Box component="img" src={mockdata.images[0]} alt={mockdata.title} sx={{ width: '100%', height: 'auto', objectFit: 'cover' }} />
+            <Box component="img" src={mockdata.images[0]} alt="Property Image" sx={{ width: '100%', height: 'auto', objectFit: 'cover' }} />
           </Grid>
           <Grid item xs={12} sm={3}>
             <Typography variant="h6" fontWeight="bold" sx={{ marginBottom: 1 }}>
               Building Details
-            </Typography>
-            <Typography variant="body1" textAlign="start">
-              Name: {mockdata.building.name}
             </Typography>
             <Typography variant="body1" textAlign="start">
               Address: {mockdata.building.address}
@@ -94,13 +69,16 @@ const Contract: React.FC = () => {
             <Typography variant="body1" textAlign="start">
               Floors: {mockdata.building.floors}
             </Typography>
+            <Typography variant="body1" textAlign="start">
+              Area: {mockdata.area} sqft
+            </Typography>
           </Grid>
           <Grid item xs={12} sm={3}>
             <Typography variant="h6" fontWeight="bold" sx={{ marginBottom: 1 }}>
               Amenities
             </Typography>
             <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 1, marginTop: 1 }}>
-              {mockdata.building.amenities.map((amenity, index) => (
+              {amenities.map((amenity, index) => (
                 <Tooltip title={amenity.text} key={index}>
                   {amenity.icon}
                 </Tooltip>
@@ -115,7 +93,7 @@ const Contract: React.FC = () => {
                   <ElectricityIcon />
                 </Tooltip>
                 <Typography variant="body1" textAlign="start">
-                  {mockdata.consumption.electricity.usage} {mockdata.consumption.electricity.unit}
+                  {mockdata.electricityUsage} kWh
                 </Typography>
               </Stack>
               <Stack direction="row" alignItems="center" spacing={1}>
@@ -123,29 +101,13 @@ const Contract: React.FC = () => {
                   <WaterIcon />
                 </Tooltip>
                 <Typography variant="body1" textAlign="start">
-                  {mockdata.consumption.water.usage} {mockdata.consumption.water.unit}
+                  {mockdata.waterUsage} gal
                 </Typography>
               </Stack>
             </Stack>
           </Grid>
           <Grid item xs={12} sm={3}>
-            <Box sx={{ marginBottom: 2 }}>
-              <Typography variant="h6" fontWeight="bold" sx={{ marginBottom: 1 }}>
-                Status
-              </Typography>
-              <Typography variant="body1" textAlign="start">
-                Active
-              </Typography>
-            </Box>
-            <Box sx={{ marginBottom: 2 }}>
-              <Typography variant="h6" fontWeight="bold" sx={{ marginBottom: 1 }}>
-                Price
-              </Typography>
-              <Typography variant="body1" textAlign="start">
-                {mockdata.price.amount} {mockdata.price.currency} per {mockdata.price.period}
-              </Typography>
-            </Box>
-            <Box sx={{ display: 'flex', gap: 1 }}>
+            <Box sx={{ display: 'flex', gap: 1, marginBottom: 2 }}>
               <IconButton aria-label="edit" color="primary">
                 <EditIcon />
               </IconButton>
@@ -188,7 +150,7 @@ const Contract: React.FC = () => {
                       <CloseIcon />
                     </IconButton>
                   </Tooltip>
-                  <Tooltip title="More>">
+                  <Tooltip title="More">
                     <IconButton aria-label="more" color="primary" onClick={handleApprove}>
                       <ListIcon />
                     </IconButton>

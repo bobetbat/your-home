@@ -1,46 +1,12 @@
-import React, { useCallback } from 'react';
-import { useForm, useFieldArray } from 'react-hook-form';
-import { Box, Button, Checkbox, FormControlLabel, TextField } from '@mui/material';
+import React, { useCallback, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { Box, Button, Checkbox, FormControlLabel, Dialog, DialogActions, DialogContent, DialogTitle, CircularProgress } from '@mui/material';
 import { SelectInput, SelectInputProps } from './inputs/Select';
 import { TextInput } from './inputs/Text';
 import { useMintEstateToken } from '../hooks/useMintEstate';
 
-// Enums for dropdown options
-enum PropertyType {
-  Residential = 'Residential',
-  Commercial = 'Commercial',
-  Agricultural = 'Agricultural'
-}
-
-enum BuildingType {
-  House = 'House',
-  Apartment = 'Apartment',
-  CommercialBuilding = 'Commercial Building'
-}
-
-enum ConstructionType {
-  Concrete = 'Concrete',
-  Wood = 'Wood',
-  SteelFrame = 'Steel Frame'
-}
-
-export interface Estate {
-  coordinates: string;
-  propertyAddress: string;
-  propertyArea: number;
-  propertyType: PropertyType;
-  buildingType: BuildingType;
-  buildYear: number;
-  title: string;
-  constructionType: ConstructionType;
-  utilities: string[];
-  amenities: string[];
-  landArea: number;
-  floor: number;
-  electricity: boolean;
-  waterSupply: boolean;
-  hotWaterSupply: boolean;
-}
+// Using previously defined enums and interfaces
+import { PropertyType, BuildingType, ConstructionType, Estate, AmenityType } from './types';
 
 const propertyOptions: SelectInputProps<Estate>['options'] = [
   { label: 'Residential', value: PropertyType.Residential },
@@ -59,77 +25,92 @@ const constructionOptions: SelectInputProps<Estate>['options'] = [
   { label: 'Wood', value: ConstructionType.Wood },
   { label: 'Steel Frame', value: ConstructionType.SteelFrame }
 ];
+export const mockdata: Estate = {
+  id: "1234",
+  images: ['/logo-dark.svg', '/logo-dark.svg', '/logo-dark.svg'],
+  area: 1000,
+  building: {
+    address: "123 Main St, City, State Zip",
+    yearBuilt: 2015,
+    floors: 20,
+    amenities: [
+      AmenityType.SwimmingPool,
+      AmenityType.FitnessCenter,
+      AmenityType.Concierge
+    ]
+  },
+  electricityUsage: 200,
+  waterUsage: 500,
+  propertyType: PropertyType.Residential,
+  buildingType: BuildingType.Apartment,
+  constructionType: ConstructionType.Concrete,
+};
 
 export const MintEstateForm: React.FC<{ onSubmit: () => void }> = ({ onSubmit }) => {
-  const { mint, loading, error } = useMintEstateToken()
+  const { mint, loading, error } = useMintEstateToken();
   const { control, register, handleSubmit: submit, formState: { isSubmitting } } = useForm<Estate>({
-    defaultValues: {
-      utilities: [],
-      amenities: []
-    }
+    defaultValues: mockdata // Use mockdata as default values
   });
-  // TODO: solve array inputs
-  // const { fields: utilityFields, append: appendUtility, remove: removeUtility } = useFieldArray<Estate, never, "id">({
-  //   control,
-  //   name: "utilities"
-  // });
-  // const { fields: amenityFields, append: appendAmenity, remove: removeAmenity } = useFieldArray<Estate>({
-  //   control,
-  //   name: "amenities"
-  // });
+
+  const [open, setOpen] = useState(false);
+  const [success, setSuccess] = useState<boolean | null>(null);
 
   const handleSubmit = useCallback(
     async (data: Estate) => {
+      setOpen(true);
       try {
-        await mint(data)
-        onSubmit()
+        await mint(data);
+        setSuccess(true);
+        onSubmit();
       } catch (e) {
-
+        console.error(e);
+        setSuccess(false);
       }
     },
-    [mint],
-  )
+    [mint, onSubmit],
+  );
+
+  const handleClose = () => {
+    setOpen(false);
+    setSuccess(null);
+  };
 
   return (
-    <form onSubmit={submit(handleSubmit)}>
-      <Box display="flex" flexDirection="column" gap={2}>
-        <TextInput name="coordinates" label="Coordinates" control={control} required />
-        <TextInput name="propertyAddress" label="Property Address" control={control} required />
-        <TextInput name="propertyArea" label="Property Area (sq meters)" type="number" control={control} required />
-        <SelectInput name="propertyType" label="Property Type" control={control} options={propertyOptions} required />
-        <SelectInput name="buildingType" label="Building Type" control={control} options={buildingOptions} required />
-        <TextInput name="buildYear" label="Year Built" type="number" control={control} required />
-        <TextInput name="title" label="Title" control={control} required />
-        <SelectInput name="constructionType" label="Construction Type" control={control} options={constructionOptions} required />
-
-        {/* <Box>
-          {utilityFields.map((field, index) => (
-            <Box key={field.id}>
-              <TextField {...register(`utilities.${index}` as const)} label="Utility" variant="outlined" />
-              <Button onClick={() => removeUtility(index)}>Remove</Button>
-            </Box>
-          ))}
-          <Button onClick={() => appendUtility({})}>Add Utility</Button>
+    <>
+      <form onSubmit={submit(handleSubmit)}>
+        <Box display="flex" flexDirection="column" gap={2}>
+          <TextInput name="area" label="Area (sqft)" type="number" control={control} required />
+          <TextInput name="building.address" label="Building Address" control={control} required />
+          <TextInput name="building.yearBuilt" label="Year Built" type="number" control={control} required />
+          <TextInput name="building.floors" label="Number of Floors" type="number" control={control} required />
+          <SelectInput name="propertyType" label="Property Type" control={control} options={propertyOptions} required />
+          <SelectInput name="buildingType" label="Building Type" control={control} options={buildingOptions} required />
+          <SelectInput name="constructionType" label="Construction Type" control={control} options={constructionOptions} required />
+          <TextInput name="electricityUsage" label="Electricity Usage (kWh)" type="number" control={control} required />
+          <TextInput name="waterUsage" label="Water Usage (gal)" type="number" control={control} required />
+          <Button type="submit" variant="contained" disabled={isSubmitting}>
+            Mint Estate
+          </Button>
         </Box>
-        <Box>
-          {amenityFields.map((field, index) => (
-            <Box key={field.id}>
-              <TextField {...register(`amenities.${index}` as const)} label="Amenity" variant="outlined" />
-              <Button onClick={() => removeAmenity(index)}>Remove</Button>
-            </Box>
-          ))}
-          <Button onClick={() => appendAmenity({})}>Add Amenity</Button>
-        </Box> */}
+      </form>
 
-        <TextInput name="landArea" label="Land Area (sq meters)" type="number" control={control} />
-        <TextInput name="floor" label="Floor" type="number" control={control} />
-        <FormControlLabel control={<Checkbox {...register("electricity")} />} label="Electricity Available" />
-        <FormControlLabel control={<Checkbox {...register("waterSupply")} />} label="Water Supply Available" />
-        <FormControlLabel control={<Checkbox {...register("hotWaterSupply")} />} label="Hot Water Supply Available" />
-        <Button type="submit" variant="contained" disabled={isSubmitting}>
-          Mint Estate
-        </Button>
-      </Box>
-    </form>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>{success === null ? 'Submitting Transaction' : success ? 'Transaction Successful' : 'Transaction Failed'}</DialogTitle>
+        <DialogContent>
+          {success === null ? (
+            <CircularProgress />
+          ) : success ? (
+            <div>Success! Your estate has been minted.</div>
+          ) : (
+            <div>Something went wrong. Please try again.</div>
+          )}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            {success ? 'Close' : 'Try Again'}
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
   );
 };

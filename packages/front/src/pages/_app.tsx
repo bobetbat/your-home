@@ -6,7 +6,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 import { Provider } from 'react-redux'
 import { ThemeProvider, CssBaseline } from '@mui/material';
-import {  RainbowKitProvider } from '@rainbow-me/rainbowkit';
+import { RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import { WagmiProvider } from 'wagmi';
 
 import { config } from '../config/wagmi';
@@ -22,19 +22,19 @@ const client = new QueryClient()
 const App = ({ Component, pageProps }: AppProps) => {
 
   return (
-      <Provider store={store}>
-        <ThemeProvider theme={theme}>
-          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-          <CssBaseline />
-          <WagmiProvider config={config}>
-            <QueryClientProvider client={client}>
-                <RainbowKitProvider>
-                <Component {...pageProps} />
-              </RainbowKitProvider>
-            </QueryClientProvider>
-          </WagmiProvider>
-  </ThemeProvider>
-      </Provider>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+        <CssBaseline />
+        <WagmiProvider config={config}>
+          <QueryClientProvider client={client}>
+            <RainbowKitProvider>
+              <Component {...pageProps} />
+            </RainbowKitProvider>
+          </QueryClientProvider>
+        </WagmiProvider>
+      </ThemeProvider>
+    </Provider>
   );
 }
 

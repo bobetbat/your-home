@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from 'react';
 import { useAccount, useWriteContract } from 'wagmi';
 import EstateToken from '../../../contracts/artifacts/contracts/EstateToken.sol/EstateToken.json'; // Adjust the path according to your project structure
-import { Estate } from '../components/MintEstateForm';
 import { contracts } from '../config/contract';
+import { Estate } from '../components/types';
 
 
 type MintEstateTokenHook = {
