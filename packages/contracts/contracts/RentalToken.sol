@@ -10,7 +10,7 @@ contract RentalToken is ERC721Enumerable, Ownable {
 
     struct RentalAgreement {
         uint256 propertyId;
-        uint256 tokenId;
+        uint256 agreementId;
         RentalStatus status;
         address owner;
         uint256 startTime;
@@ -24,7 +24,7 @@ contract RentalToken is ERC721Enumerable, Ownable {
 
     mapping(uint256 => RentalAgreement) public rentalAgreements;
 
-    event RentalListed(uint256 indexed agreementId, uint256 indexed propertyId, uint256 tokenId);
+    event RentalListed(uint256 indexed agreementId, uint256 indexed propertyId);
     event RentalClosed(uint256 indexed agreementId);
     event TenantApplied(uint256 indexed agreementId, address applicant);
     event TenantSelected(uint256 indexed agreementId, address tenant);
@@ -40,7 +40,7 @@ contract RentalToken is ERC721Enumerable, Ownable {
 
         RentalAgreement storage agreement = rentalAgreements[agreementId];
         agreement.propertyId = propertyId;
-        agreement.tokenId = agreementId;
+        agreement.agreementId = agreementId;
         agreement.status = RentalStatus.Listed;
         agreement.owner = _msgSender();
         agreement.startTime = startTime;
@@ -48,7 +48,7 @@ contract RentalToken is ERC721Enumerable, Ownable {
 
         _safeMint(_msgSender(), agreementId);
 
-        emit RentalListed(agreementId, propertyId, agreementId);
+        emit RentalListed(agreementId, propertyId);
         return agreementId;
     }
 

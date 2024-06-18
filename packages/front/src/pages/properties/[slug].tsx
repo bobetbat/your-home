@@ -13,7 +13,6 @@ import {
   IconButton,
   Stack,
 } from '@mui/material';
-import { styled } from '@mui/material/styles';
 import PoolIcon from '@mui/icons-material/Pool';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import ConciergeIcon from '@mui/icons-material/Person';
@@ -22,6 +21,8 @@ import WaterIcon from '@mui/icons-material/Opacity';
 import EditIcon from '@mui/icons-material/Edit';
 import ListIcon from '@mui/icons-material/List';
 import DeleteIcon from '@mui/icons-material/Delete';
+import CheckIcon from '@mui/icons-material/Check';
+import CloseIcon from '@mui/icons-material/Close';
 
 const mockdata = {
   id: "1234",
@@ -47,43 +48,10 @@ const mockdata = {
 };
 
 const offers = [
-  { id: 1, title: 'Offer 1', description: 'Description for offer 1' },
-  { id: 2, title: 'Offer 2', description: 'Description for offer 2' },
-  { id: 3, title: 'Offer 3', description: 'Description for offer 3' },
+  { id: 1, address: '0x2093jr2094j0924j2049k193e3290', starting: '2024-07-01', ending: '2025-06-30' },
+  { id: 2, address: '0x2093jr2094j0924j2049k193e3290', starting: '2024-08-01', ending: '2025-07-31' },
+  { id: 3, address: '0x2093jr2094j0924j2049k193e3290', starting: '2024-09-01', ending: '2025-08-31' },
 ];
-
-const Image = styled('img')({
-  // width: '200px',
-  // height: '200px',
-  objectFit: 'cover',
-});
-
-const AmenitiesWrapper = styled('div')({
-  display: 'flex',
-  flexDirection: 'row',
-  alignItems: 'center',
-  gap: '10px',
-  marginTop: '10px',
-});
-
-const ConsumptionWrapper = styled('div')({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  gap: '10px',
-  marginTop: '10px',
-});
-
-const TitleTypography = styled(Typography)({
-  fontWeight: 'bold',
-  fontSize: '1rem',
-  marginBottom: '8px',
-});
-
-const ContentTypography = styled(Typography)({
-  fontSize: '0.875rem',
-  marginBottom: '8px',
-});
 
 const Contract: React.FC = () => {
   const counter = useSelector((state: RootState) => state.counter.value);
@@ -99,103 +67,139 @@ const Contract: React.FC = () => {
     alert('Approved tenant');
   };
 
+  const handleDecline = () => {
+    alert('Declined tenant');
+  };
+
   return (
     <Layout header footer>
-      <Box sx={{ flexGrow: 1, padding: 2 }}>
-        <Paper sx={{ p: 2, mb: 4, borderRadius: '16px', border: '1px solid #ccc', width: '100%', height: 'auto' }}>
-          <Grid container spacing={2} alignItems="flex-start">
-            <Grid item xs={12} sm={3}>
-              <Image src={mockdata.images[0]} alt={mockdata.title} />
-            </Grid>
-            <Grid item xs={12} sm={3}>
-              <TitleTypography variant="h6">
-                Building Details
-              </TitleTypography>
-              <ContentTypography variant="body1" textAlign="start">
-                Name: {mockdata.building.name}
-              </ContentTypography>
-              <ContentTypography variant="body1" textAlign="start">
-                Address: {mockdata.building.address}
-              </ContentTypography>
-              <ContentTypography variant="body1" textAlign="start">
-                Year Built: {mockdata.building.yearBuilt}
-              </ContentTypography>
-              <ContentTypography variant="body1" textAlign="start">
-                Floors: {mockdata.building.floors}
-              </ContentTypography>
-            </Grid>
-            <Grid item xs={12} sm={3}>
-              <TitleTypography variant="h6">
-                Amenities
-              </TitleTypography>
-              <AmenitiesWrapper>
-                {mockdata.building.amenities.map((amenity, index) => (
-                  <Tooltip title={amenity.text} key={index}>
-                    {amenity.icon}
-                  </Tooltip>
-                ))}
-              </AmenitiesWrapper>
-              <TitleTypography variant="h6" sx={{ mt: 2 }}>
-                Consumption
-              </TitleTypography>
-              <Stack >
-                <Stack direction='row'>
-                  <Tooltip title="Electricity Usage">
-                    <ElectricityIcon />
-                  </Tooltip>
-                  <ContentTypography variant="body1" textAlign="start">
-                    {mockdata.consumption.electricity.usage} {mockdata.consumption.electricity.unit}
-                  </ContentTypography>
-                </Stack>
-                <Stack direction='row'>
-                  <Tooltip title="Water Usage">
-                    <WaterIcon />
-                  </Tooltip>
-                  <ContentTypography variant="body1" textAlign="start">
-                    {mockdata.consumption.water.usage} {mockdata.consumption.water.unit}
-                  </ContentTypography>
-                </Stack>
-              </Stack>
-            </Grid>
-            <Grid item xs={12} sm={3}>
-              <Box sx={{ mb: 2 }}>
-                <TitleTypography variant="h6">
-                  Status
-                </TitleTypography>
-                <ContentTypography variant="body1" textAlign="start">
-                  Active
-                </ContentTypography>
-              </Box>
-              <Box sx={{ mb: 2 }}>
-                <TitleTypography variant="h6">
-                  Price
-                </TitleTypography>
-                <ContentTypography variant="body1" textAlign="start">
-                  {mockdata.price.amount} {mockdata.price.currency} per {mockdata.price.period}
-                </ContentTypography>
-              </Box>
-              <Box sx={{ display: 'flex', gap: '10px' }}>
-                <IconButton aria-label="edit" color="primary">
-                  <EditIcon />
-                </IconButton>
-                <IconButton aria-label="list" color="primary">
-                  <ListIcon />
-                </IconButton>
-                <IconButton aria-label="delete" color="secondary">
-                  <DeleteIcon />
-                </IconButton>
-              </Box>
-            </Grid>
+      <Paper sx={{ p: 2, mb: 4, borderRadius: 2, border: '1px solid #ccc', width: '100%', height: 'auto' }}>
+        <Grid container spacing={2} alignItems="flex-start">
+          <Grid item xs={12} sm={3}>
+            <Box component="img" src={mockdata.images[0]} alt={mockdata.title} sx={{ width: '100%', height: 'auto', objectFit: 'cover' }} />
           </Grid>
-        </Paper>
-        <Box>
-          {offers.map((offer) => (
-            <Paper key={offer.id} sx={{ p: 2, mb: 2, borderRadius: '16px', border: '1px solid #ccc' }}>
-              <TitleTypography variant="h6">{offer.title}</TitleTypography>
-              <ContentTypography variant="body1">{offer.description}</ContentTypography>
-            </Paper>
-          ))}
-        </Box>
+          <Grid item xs={12} sm={3}>
+            <Typography variant="h6" fontWeight="bold" sx={{ marginBottom: 1 }}>
+              Building Details
+            </Typography>
+            <Typography variant="body1" textAlign="start">
+              Name: {mockdata.building.name}
+            </Typography>
+            <Typography variant="body1" textAlign="start">
+              Address: {mockdata.building.address}
+            </Typography>
+            <Typography variant="body1" textAlign="start">
+              Year Built: {mockdata.building.yearBuilt}
+            </Typography>
+            <Typography variant="body1" textAlign="start">
+              Floors: {mockdata.building.floors}
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={3}>
+            <Typography variant="h6" fontWeight="bold" sx={{ marginBottom: 1 }}>
+              Amenities
+            </Typography>
+            <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 1, marginTop: 1 }}>
+              {mockdata.building.amenities.map((amenity, index) => (
+                <Tooltip title={amenity.text} key={index}>
+                  {amenity.icon}
+                </Tooltip>
+              ))}
+            </Box>
+            <Typography variant="h6" fontWeight="bold" sx={{ marginTop: 2 }}>
+              Consumption
+            </Typography>
+            <Stack spacing={1}>
+              <Stack direction="row" alignItems="center" spacing={1}>
+                <Tooltip title="Electricity Usage">
+                  <ElectricityIcon />
+                </Tooltip>
+                <Typography variant="body1" textAlign="start">
+                  {mockdata.consumption.electricity.usage} {mockdata.consumption.electricity.unit}
+                </Typography>
+              </Stack>
+              <Stack direction="row" alignItems="center" spacing={1}>
+                <Tooltip title="Water Usage">
+                  <WaterIcon />
+                </Tooltip>
+                <Typography variant="body1" textAlign="start">
+                  {mockdata.consumption.water.usage} {mockdata.consumption.water.unit}
+                </Typography>
+              </Stack>
+            </Stack>
+          </Grid>
+          <Grid item xs={12} sm={3}>
+            <Box sx={{ marginBottom: 2 }}>
+              <Typography variant="h6" fontWeight="bold" sx={{ marginBottom: 1 }}>
+                Status
+              </Typography>
+              <Typography variant="body1" textAlign="start">
+                Active
+              </Typography>
+            </Box>
+            <Box sx={{ marginBottom: 2 }}>
+              <Typography variant="h6" fontWeight="bold" sx={{ marginBottom: 1 }}>
+                Price
+              </Typography>
+              <Typography variant="body1" textAlign="start">
+                {mockdata.price.amount} {mockdata.price.currency} per {mockdata.price.period}
+              </Typography>
+            </Box>
+            <Box sx={{ display: 'flex', gap: 1 }}>
+              <IconButton aria-label="edit" color="primary">
+                <EditIcon />
+              </IconButton>
+              <IconButton aria-label="list" color="primary">
+                <ListIcon />
+              </IconButton>
+              <IconButton aria-label="delete" color="secondary">
+                <DeleteIcon />
+              </IconButton>
+            </Box>
+          </Grid>
+        </Grid>
+      </Paper>
+      <Box>
+        <Stack pb={3}>
+          <Typography variant='h3'>Applications:</Typography>
+        </Stack>
+        {offers.map((offer) => (
+          <Paper key={offer.id} sx={{ p: 2, mb: 2, borderRadius: 2, border: '1px solid #ccc' }}>
+            <Grid container spacing={2} alignItems="center">
+              <Grid item xs={12} sm={4}>
+                <Typography variant="h6" fontWeight="bold">Address:</Typography>
+                <Typography variant="body1">{offer.address}</Typography>
+              </Grid>
+              <Grid item xs={12} sm={3}>
+                <Typography variant="body1">Starting: {offer.starting}</Typography>
+                {/* <Typography variant="body1">Ending: {offer.ending}</Typography> */}
+              </Grid>
+              <Grid item xs={12} sm={3}>
+                {/* <Typography variant="body1">Starting: {offer.starting}</Typography> */}
+                <Typography variant="body1">Ending: {offer.ending}</Typography>
+              </Grid>
+              <Grid item xs={12} sm={2}>
+                <Box sx={{ display: 'flex', gap: 1 }}>
+                  <Tooltip title="Accept">
+                    <IconButton aria-label="accept" color="primary" onClick={handleApprove}>
+                      <CheckIcon />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title="Decline">
+                    <IconButton aria-label="decline" color="secondary" onClick={handleDecline}>
+                      <CloseIcon />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title="Accept">
+                    <IconButton aria-label="accept" color="primary" onClick={handleApprove}>
+                      <CheckIcon />
+                    </IconButton>
+                  </Tooltip>
+                </Box>
+              </Grid>
+            </Grid>
+          </Paper>
+        ))}
       </Box>
     </Layout>
   );

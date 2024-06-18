@@ -22,11 +22,11 @@ export const PropertyList: React.FC<Props> = ({ loading, error, data }) => {
   };
 
   return (
-    <Box sx={{ p: 2, display: 'flex', flexDirection: 'column', gap: 2 }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
       {loading && <CircularProgress />}
       {error && <Typography>No properties owned</Typography>}
       {!loading && !error && data && data.map((estate, index) => (
-        <Paper 
+        <Paper
           key={index}
           sx={{
             p: 2,
