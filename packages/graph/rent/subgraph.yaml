@@ -1,0 +1,47 @@
+specVersion: 1.0.0
+indexerHints:
+  prune: auto
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: RentalToken
+    network: sepolia
+    source:
+      address: "0x913f18195Dc71A6897Ef6403726bbEE34B3B3c3b"
+      abi: RentalToken
+      startBlock: 0
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Approval
+        - ApprovalForAll
+        - OwnershipTransferred
+        - RentalClosed
+        - RentalListed
+        - TenantApplied
+        - TenantSelected
+        - Transfer
+      abis:
+        - name: RentalToken
+          file: ./abis/RentalToken.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,indexed uint256)
+          handler: handleApproval
+        - event: ApprovalForAll(indexed address,indexed address,bool)
+          handler: handleApprovalForAll
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: RentalClosed(indexed uint256)
+          handler: handleRentalClosed
+        - event: RentalListed(indexed uint256,indexed uint256)
+          handler: handleRentalListed
+        - event: TenantApplied(indexed uint256,address)
+          handler: handleTenantApplied
+        - event: TenantSelected(indexed uint256,address)
+          handler: handleTenantSelected
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+      file: ./src/rental-token.ts
