@@ -30,3 +30,6 @@ Conventional commits: https://www.conventionalcommits.org/en/v1.0.0/
 
 estate contract: 0x512e9f0bFCC8989D7F4d2016b6b5147ea4089fEC
 rent contract: 0x913f18195Dc71A6897Ef6403726bbEE34B3B3c3b
+
+estate subgraph: https://api.studio.thegraph.com/query/22641/estate/0.0.2
+rent subgraph: https://api.studio.thegraph.com/query/22641/rent/0.0.1
