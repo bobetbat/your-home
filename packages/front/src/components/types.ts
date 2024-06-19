@@ -35,7 +35,7 @@ export interface Building {
 }
 
 export interface Estate {
-  id: string;
+  // id: string;
   images: string[];
   area: number;
   building: Building;

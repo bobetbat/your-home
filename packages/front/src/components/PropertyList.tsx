@@ -2,16 +2,13 @@ import React from 'react';
 import { CircularProgress, Paper, Typography, Box } from '@mui/material';
 import { useRouter } from 'next/router';
 import HomeIcon from '@mui/icons-material/Home'; // Example icon for property data
+import { EstateTokenData } from '../hooks/useGraphMetaData';
 
-interface Estate {
-  tokenId: string;
-  tokenURI: string;
-}
 
 interface Props {
   loading: boolean;
   error: boolean;
-  data: Estate[] | null;
+  data?: EstateTokenData[] | null;
 }
 
 export const PropertyList: React.FC<Props> = ({ loading, error, data }) => {

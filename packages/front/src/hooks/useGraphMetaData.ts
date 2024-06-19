@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { Estate } from '../components/types';
 
 const endpoint = 'https://api.studio.thegraph.com/query/22641/estate/0.0.2';
 
@@ -6,11 +7,8 @@ const headers = {
   "content-type": "application/json",
   // "Authorization": "<token>"
 };
-interface Query {
-  query: string;
-}
 
-export const getItems: Query = {
+const graphqlQuery = {
   "query": `{
     estateMints {
       to
@@ -19,59 +17,53 @@ export const getItems: Query = {
     }
   }`,
 };
-export interface EstateTokenData {
+
+export interface EstateToken {
   tokenURI: string;
   to: string;
   tokenId: string;
-  metadata?: any;  // Optional field to store metadata
+}
+export type EstateTokenData = EstateToken & Estate
+
+async function fetchGraphData() {
+  const response = await fetch(endpoint, {
+    method: 'POST',
+    headers: headers,
+    body: JSON.stringify(graphqlQuery)
+  });
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
+  return response.json();
 }
 
-export const useGraphMetaData = (graphqlQuery: any) => {
-  const [data, setData] = useState<EstateTokenData[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<any>(null);
+async function fetchMetadata(tokens: EstateTokenData[]): Promise<EstateTokenData[]> {
+  const results = await Promise.allSettled(tokens.map(async token => {
+    const ipfsUrl = `https://${process.env.NEXT_PUBLIC_IPFS_PINATA_GATEWAY}/ipfs/${token.tokenURI.split('ipfs://')[1]}`;
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const options = {
-          method: 'POST',
-          headers: headers,
-          body: JSON.stringify(graphqlQuery)
-        };
-        const response = await fetch(endpoint, options);
-        const data = await response.json();
+    try {
+      const metadataResponse = await fetch(ipfsUrl);
+      const metadata: EstateTokenData = await metadataResponse.json();
+      console.log('metadata:', metadata);
+      return { ...token, ...metadata };  // Merge metadata with token data
+    } catch (error) {
+      console.error('Failed to fetch metadata for token', token, error);
+      throw error;  // Re-throw to mark this promise as rejected
+    }
+  }));
 
-        // Additional function to fetch metadata for each token
-        const fetchMetadata = async (tokens: EstateTokenData[]) => {
-          return Promise.all(tokens.map(async token => {
-            // TODO: do not fetch old tokens metadata
-            if (Number(token.tokenId) > 4) {
-              const ipfsUrl = `https://${process.env.NEXT_PUBLIC_IPFS_PINATA_GATEWAY}/ipfs/${token.tokenURI.split('ipfs://')[1]}`;
-              const metadataResponse = await fetch(ipfsUrl);
-              const metadata = await metadataResponse.json();
-              if (metadata) {
-                return { ...token, ...metadata };  // Merge metadata with token data
-              }
-            }
-            return { ...token };
-          }));
-        };
+  // Filter out the results to only include successfully resolved promises
+  return results.filter(result => result.status === 'fulfilled')
+    .map((result:any) => result.value);
+}
 
-        // Fetch and update state with metadata
-        const tokensWithMetadata = await fetchMetadata(data.data.estateMints);
-        setData(tokensWithMetadata);
-        console.log("fetch data with metadata:", tokensWithMetadata);
-      } catch (error) {
-        console.error("error fetching contract data:", error);
-        setError(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  return { data, loading, error };
+export const useGraphMetaData = () => {
+  return useQuery({
+    queryKey: ['graphData'], queryFn: async () => {
+      const data = await fetchGraphData();
+      const tokensWithMetadata = await fetchMetadata(data.data.estateMints);
+      console.log('tokensWithMetadata', tokensWithMetadata)
+      return tokensWithMetadata;
+    }
+  });
 };
