@@ -1,8 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import { Estate } from '../components/types';
-import { EstateToken } from './useGraph';
+import { Estate } from '../config/types';
 
-export type EstateTokenData = EstateToken & Estate;
 
 async function fetchMetadata(tokenId: string, tokenURI: string): Promise<Estate> {
   const ipfsUrl = `https://${process.env.NEXT_PUBLIC_IPFS_PINATA_GATEWAY}/ipfs/${tokenURI.split('ipfs://')[1]}`;

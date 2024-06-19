@@ -1,5 +1,6 @@
+// TODO: refactor, query not managed properly
 import { useQuery } from '@tanstack/react-query';
-import { Estate } from '../components/types';
+import { EstateTokenData } from '../config/types';
 
 const endpoint = 'https://api.studio.thegraph.com/query/22641/estate/0.0.2';
 
@@ -17,13 +18,6 @@ const graphqlQuery = {
     }
   }`,
 };
-
-export interface EstateToken {
-  tokenURI: string;
-  to: string;
-  tokenId: string;
-}
-export type EstateTokenData = EstateToken & Estate
 
 async function fetchGraphData() {
   const response = await fetch(endpoint, {

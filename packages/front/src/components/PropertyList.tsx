@@ -2,7 +2,7 @@ import React from 'react';
 import { CircularProgress, Paper, Typography, Box } from '@mui/material';
 import { useRouter } from 'next/router';
 import HomeIcon from '@mui/icons-material/Home'; // Example icon for property data
-import { EstateTokenData } from '../hooks/useGraphMetaData';
+import { EstateTokenData } from '../config/types';
 
 
 interface Props {
@@ -20,7 +20,7 @@ export const PropertyList: React.FC<Props> = ({ loading, error, data }) => {
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-      {loading && <CircularProgress />}
+      {loading && <CircularProgress sx={{alignSelf:'center'}} />}
       {error && <Typography>No properties owned</Typography>}
       {!loading && !error && data && data.map((estate, index) => (
         <Paper

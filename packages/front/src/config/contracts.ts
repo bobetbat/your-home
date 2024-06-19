@@ -1,6 +1,5 @@
 import { sepolia } from 'wagmi/chains'
 import type { Hash } from '../types';
-export const CONTRACT_ADDRESS_MANTLE: Hash = '0xB74475009BD955CB8Ef3d930999737DF1Edb96a6';
 
 export interface TGetNumberOfProperties {
   owner: Hash

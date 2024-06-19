@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import { EstateToken } from '../config/types';
 
 const endpoint = 'https://api.studio.thegraph.com/query/22641/estate/0.0.2';
 
@@ -15,12 +16,6 @@ const graphqlQuery = {
     }
   }`,
 };
-
-export interface EstateToken {
-  tokenURI: string;
-  to: string;
-  tokenId: string;
-}
 
 async function fetchGraphData(): Promise<EstateToken[]> {
   const response = await fetch(endpoint, {

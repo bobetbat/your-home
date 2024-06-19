@@ -6,7 +6,7 @@ import { TextInput } from './inputs/Text';
 import { useMintEstateToken } from '../hooks/useMintEstate';
 
 // Using previously defined enums and interfaces
-import { PropertyType, BuildingType, ConstructionType, Estate, AmenityType } from './types';
+import { PropertyType, BuildingType, ConstructionType, Estate, AmenityType } from '../config/types';
 
 const propertyOptions: SelectInputProps<Estate>['options'] = [
   { label: 'Residential', value: PropertyType.Residential },

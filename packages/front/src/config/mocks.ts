@@ -1,4 +1,4 @@
-import { Offer } from "./types";
+import { Offer } from "./mock-types";
 
 export const contractAddress = '0xE47845dac04A7C91E73B8f09b441785810D40f69';
 export const localContractAddress = '0x5fc8d32690cc91d4c39d9d3abcbd16989f875707';

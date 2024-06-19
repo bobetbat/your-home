@@ -1,36 +1,55 @@
-
-export interface Property {
-  title: string;
-  description: string;
-  imageUrls: string[];
-  location: {
-    address: string;
-    lat: number;
-    lng: number;
-  };
-  bedrooms: number;
-  bathrooms: number;
-  squareFeet: number;
-  amenities: string[];
-  yearBuilt?: number;
+export enum PropertyType {
+  Residential = 'Residential',
+  Commercial = 'Commercial',
+  Agricultural = 'Agricultural'
 }
 
-export interface Offer {
-  offerId: string;
-  type: "rent" | "sell" | "short lease"; // Removed "own", added "short lease"
-  landlord?: string;
-  seller?: string;
-  owner?: string;
-  property: Property;
-  leaseTerms?: string;
-  availabilityDate?: string;
-  rentalPrice?: number;
-  salePrice?: number;
-  askingPrice?: number;
-  status?: string;
+export enum BuildingType {
+  House = 'House',
+  Apartment = 'Apartment',
+  CommercialBuilding = 'Commercial Building'
 }
 
-export interface FetchError {
-  message: string;
-  // You can add more details depending on what information you receive from errors
+export enum ConstructionType {
+  Concrete = 'Concrete',
+  Wood = 'Wood',
+  SteelFrame = 'Steel Frame'
 }
+
+export enum AmenityType {
+  SwimmingPool = 'Swimming Pool',
+  FitnessCenter = 'Fitness Center',
+  Concierge = '24-Hour Concierge'
+}
+
+export interface Area {
+  size: number;
+  unit: string;
+}
+
+export interface Building {
+  address: string;
+  yearBuilt: number;
+  floors: number;
+  amenities: AmenityType[];
+}
+
+export interface Estate {
+  // id: string;
+  images: string[];
+  area: number;
+  building: Building;
+  electricityUsage: number;
+  waterUsage: number;
+  propertyType: PropertyType;
+  buildingType: BuildingType;
+  constructionType: ConstructionType;
+}
+
+export interface EstateToken {
+  tokenURI: string;
+  to: string;
+  tokenId: string;
+}
+
+export type EstateTokenData = EstateToken & Estate;
