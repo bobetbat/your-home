@@ -1,34 +1,35 @@
 import * as React from 'react';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import { ConnectButton } from '@rainbow-me/rainbowkit';
-import Typography from '@mui/material/Typography';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
+import { Button, Stack } from '@mui/material';
 
 export const Header: React.FC = () => {
+  const router = useRouter();
   return (
     <AppBar>
       <Box maxWidth="xl">
-        <Toolbar disableGutters>
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              m: 2,
-              display: { md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            LOGO
-          </Typography>
-
-          <ConnectButton />
+        <Toolbar
+          disableGutters
+          sx={{ justifyContent: 'space-between', px: '1rem', py: '0.5rem' }}
+        >
+          <Button onClick={() => router.push('/')}>
+            <Image
+              src="/logo-full.svg"
+              width={130}
+              height={50}
+              alt="logo"
+            />
+          </Button>
+          <Stack direction='row' gap={2}>
+            <Button onClick={() => router.push('/properties')} color="inherit" aria-label="add to shopping cart">
+              My properties
+            </Button>
+            <ConnectButton />
+          </Stack>
         </Toolbar>
       </Box>
     </AppBar>
